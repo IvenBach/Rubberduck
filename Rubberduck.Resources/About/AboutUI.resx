@@ -173,7 +173,7 @@ All our stargazers, likers &amp; followers, for the warm fuzzies
   <data name="AboutWindow_OperatingSystem" xml:space="preserve">
     <value>OS: {0}, {1}</value>
   </data>
-  <data name="AboutWindow_FoundAnIssue" xml:space="preserve">
+  <data name="AboutWindow_FoundAnIssue2" xml:space="preserve">
     <value>Found an issue?</value>
   </data>
   <data name="AboutWindow_HelpImproveRubberduck" xml:space="preserve">

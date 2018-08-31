@@ -168,9 +168,9 @@ namespace Rubberduck.Resources.About {
         /// <summary>
         ///   Looks up a localized string similar to Found an issue?.
         /// </summary>
-        public static string AboutWindow_FoundAnIssue {
+        public static string AboutWindow_FoundAnIssue2 {
             get {
-                return ResourceManager.GetString("AboutWindow_FoundAnIssue", resourceCulture);
+                return ResourceManager.GetString("AboutWindow_FoundAnIssue2", resourceCulture);
             }
         }
         
