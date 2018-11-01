@@ -88,6 +88,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An assignment is immediately overridden by another assignment or is never referenced..
+        /// </summary>
+        public static string AssignmentNotUsedInspection {
+            get {
+                return ResourceManager.GetString("AssignmentNotUsedInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Boolean literal &apos;{0}&apos; assigned in conditional..
         /// </summary>
         public static string BooleanAssignedInIfElseInspection {
@@ -111,6 +120,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string DefTypeStatementInspection {
             get {
                 return ResourceManager.GetString("DefTypeStatementInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotation &apos;{0}&apos; is duplicated..
+        /// </summary>
+        public static string DuplicatedAnnotationInspection {
+            get {
+                return ResourceManager.GetString("DuplicatedAnnotationInspection", resourceCulture);
             }
         }
         
@@ -322,6 +340,24 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;IsMissing&apos; will always return false with the passed argument..
+        /// </summary>
+        public static string IsMissingOnInappropriateArgumentInspection {
+            get {
+                return ResourceManager.GetString("IsMissingOnInappropriateArgumentInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;IsMissing&apos; is passed an expresssion that is not an argument to the enclosing procedure..
+        /// </summary>
+        public static string IsMissingWithNonArgumentParameterInspection {
+            get {
+                return ResourceManager.GetString("IsMissingWithNonArgumentParameterInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line label &apos;{0}&apos; is not used..
         /// </summary>
         public static string LineLabelNotUsedInspection {
@@ -376,6 +412,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Module &apos;{0}&apos; has no &apos;@Folder&apos; annotation.
+        /// </summary>
+        public static string ModuleWithoutFolderInspection {
+            get {
+                return ResourceManager.GetString("ModuleWithoutFolderInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move module-level variable &apos;{0}&apos; to a smaller scope..
         /// </summary>
         public static string MoveFieldCloserToUsageInspection {
@@ -399,15 +444,6 @@ namespace Rubberduck.Resources.Inspections {
         public static string MultipleDeclarationsInspection {
             get {
                 return ResourceManager.GetString("MultipleDeclarationsInspection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; has more than one &apos;@Folder&apos; annotation..
-        /// </summary>
-        public static string MultipleFolderAnnotationsInspection {
-            get {
-                return ResourceManager.GetString("MultipleFolderAnnotationsInspection", resourceCulture);
             }
         }
         
@@ -498,6 +534,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string ObsoleteTypeHintInspection {
             get {
                 return ResourceManager.GetString("ObsoleteTypeHintInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;On Local Error&apos; statement detected..
+        /// </summary>
+        public static string OnLocalErrorInspection {
+            get {
+                return ResourceManager.GetString("OnLocalErrorInspection", resourceCulture);
             }
         }
         
@@ -673,7 +718,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unreachable &apos;Case Else&apos;: all possible values are handled by prior &apos;Case&apos; statement(s)..
+        ///   Looks up a localized string similar to Unreachable Case Else: all matches exist within prior Case statement(s)..
         /// </summary>
         public static string UnreachableCaseInspection_CaseElse {
             get {
@@ -682,7 +727,25 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid type: &apos;Case&apos; statement cannot be evaluated as the &apos;Select&apos; statement type..
+        ///   Looks up a localized string similar to Unreachable: Case Statement contains invalid range clause(s)..
+        /// </summary>
+        public static string UnreachableCaseInspection_InherentlyUnreachable {
+            get {
+                return ResourceManager.GetString("UnreachableCaseInspection_InherentlyUnreachable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unreachable: Case Statement will cause a Run-time error 6 (Overflow)..
+        /// </summary>
+        public static string UnreachableCaseInspection_Overflow {
+            get {
+                return ResourceManager.GetString("UnreachableCaseInspection_Overflow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unreachable: Case Statement will cause a Run-time error 13 (Mismatch)..
         /// </summary>
         public static string UnreachableCaseInspection_TypeMismatch {
             get {
@@ -691,7 +754,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unreachable: &apos;Case&apos; statement is handled by prior &apos;Case&apos; statement(s)..
+        ///   Looks up a localized string similar to Unreachable: Never matches or is equivalent to a prior Case statement..
         /// </summary>
         public static string UnreachableCaseInspection_Unreachable {
             get {

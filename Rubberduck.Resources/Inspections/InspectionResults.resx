@@ -126,9 +126,6 @@
   <data name="MoveFieldCloserToUsageInspection" xml:space="preserve">
     <value>Move module-level variable '{0}' to a smaller scope.</value>
   </data>
-  <data name="MultipleFolderAnnotationsInspection" xml:space="preserve">
-    <value>'{0}' has more than one '@Folder' annotation.</value>
-  </data>
   <data name="ProcedureCanBeWrittenAsFunctionInspection" xml:space="preserve">
     <value>Procedure '{0}' can be written as a function.</value>
     <comment>{0} Procedure name</comment>
@@ -243,7 +240,7 @@
   </data>
   <data name="AggregateInspection" xml:space="preserve">
     <value>{0} ({1} results).</value>
-    <comment>{0} inpection description, {1} result count</comment>
+    <comment>{0} inspection description, {1} result count</comment>
   </data>
   <data name="MemberNotOnInterfaceInspection" xml:space="preserve">
     <value>Member '{0}' was not found on the compile-time interface for type '{1}'.</value>
@@ -326,13 +323,13 @@
     <value>Case clause '{0}' cannot be reached.</value>
   </data>
   <data name="UnreachableCaseInspection_CaseElse" xml:space="preserve">
-    <value>Unreachable 'Case Else': all possible values are handled by prior 'Case' statement(s).</value>
+    <value>Unreachable Case Else: all matches exist within prior Case statement(s).</value>
   </data>
   <data name="UnreachableCaseInspection_TypeMismatch" xml:space="preserve">
-    <value>Invalid type: 'Case' statement cannot be evaluated as the 'Select' statement type.</value>
+    <value>Unreachable: Case Statement will cause a Run-time error 13 (Mismatch).</value>
   </data>
   <data name="UnreachableCaseInspection_Unreachable" xml:space="preserve">
-    <value>Unreachable: 'Case' statement is handled by prior 'Case' statement(s).</value>
+    <value>Unreachable: Never matches or is equivalent to a prior Case statement.</value>
   </data>
   <data name="UnhandledOnErrorResumeNextInspection" xml:space="preserve">
     <value>Errors are ignored but never handled again.</value>
@@ -356,5 +353,29 @@
   <data name="ObsoleteCallingConventionInspection" xml:space="preserve">
     <value>'{0}' is declared using the obsolete 'CDecl' calling convention.</value>
     <comment>{0} Procedure name</comment>
+  </data>
+  <data name="UnreachableCaseInspection_InherentlyUnreachable" xml:space="preserve">
+    <value>Unreachable: Case Statement contains invalid range clause(s).</value>
+  </data>
+  <data name="UnreachableCaseInspection_Overflow" xml:space="preserve">
+    <value>Unreachable: Case Statement will cause a Run-time error 6 (Overflow).</value>
+  </data>
+  <data name="DuplicatedAnnotationInspection" xml:space="preserve">
+    <value>Annotation '{0}' is duplicated.</value>
+  </data>
+  <data name="ModuleWithoutFolderInspection" xml:space="preserve">
+    <value>Module '{0}' has no '@Folder' annotation</value>
+  </data>
+  <data name="OnLocalErrorInspection" xml:space="preserve">
+    <value>'On Local Error' statement detected.</value>
+  </data>
+  <data name="IsMissingOnInappropriateArgumentInspection" xml:space="preserve">
+    <value>'IsMissing' will always return false with the passed argument.</value>
+  </data>
+  <data name="IsMissingWithNonArgumentParameterInspection" xml:space="preserve">
+    <value>'IsMissing' is passed an expresssion that is not an argument to the enclosing procedure.</value>
+  </data>
+  <data name="AssignmentNotUsedInspection" xml:space="preserve">
+    <value>An assignment is immediately overridden by another assignment or is never referenced.</value>
   </data>
 </root>

@@ -79,6 +79,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assignment is not used.
+        /// </summary>
+        public static string AssignmentNotUsedInspection {
+            get {
+                return ResourceManager.GetString("AssignmentNotUsedInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Boolean literal assignment in conditional.
         /// </summary>
         public static string BooleanAssignedInIfElseInspection {
@@ -111,6 +120,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string DefTypeStatementInspection {
             get {
                 return ResourceManager.GetString("DefTypeStatementInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotation is duplicated.
+        /// </summary>
+        public static string DuplicatedAnnotationInspection {
+            get {
+                return ResourceManager.GetString("DuplicatedAnnotationInspection", resourceCulture);
             }
         }
         
@@ -304,6 +322,24 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inappropriate use of &apos;IsMissing&apos; function.
+        /// </summary>
+        public static string IsMissingOnInappropriateArgumentInspection {
+            get {
+                return ResourceManager.GetString("IsMissingOnInappropriateArgumentInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inappropriate use of &apos;IsMissing&apos; function.
+        /// </summary>
+        public static string IsMissingWithNonArgumentParameterInspection {
+            get {
+                return ResourceManager.GetString("IsMissingWithNonArgumentParameterInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Line label is not used.
         /// </summary>
         public static string LineLabelNotUsedInspection {
@@ -358,6 +394,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Module without &apos;@Folder&apos; annotation.
+        /// </summary>
+        public static string ModuleWithoutFolderInspection {
+            get {
+                return ResourceManager.GetString("ModuleWithoutFolderInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scope of variable is broader than it needs to be.
         /// </summary>
         public static string MoveFieldCloserToUsageInspection {
@@ -381,15 +426,6 @@ namespace Rubberduck.Resources.Inspections {
         public static string MultipleDeclarationsInspection {
             get {
                 return ResourceManager.GetString("MultipleDeclarationsInspection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Module has more than one folder annotation..
-        /// </summary>
-        public static string MultipleFolderAnnotationsInspection {
-            get {
-                return ResourceManager.GetString("MultipleFolderAnnotationsInspection", resourceCulture);
             }
         }
         
@@ -480,6 +516,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string ObsoleteTypeHintInspection {
             get {
                 return ResourceManager.GetString("ObsoleteTypeHintInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On Local Error statement.
+        /// </summary>
+        public static string OnLocalErrorInspection {
+            get {
+                return ResourceManager.GetString("OnLocalErrorInspection", resourceCulture);
             }
         }
         

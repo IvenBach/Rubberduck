@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Rubberduck.Parsing.Common;
+using Rubberduck.Parsing.Symbols;
 using Rubberduck.Parsing.VBA.ComReferenceLoading;
 using Rubberduck.VBEditor;
 
@@ -22,14 +24,15 @@ namespace Rubberduck.Parsing.VBA.DeclarationResolving
             projectReferencesProvider)
         { }
 
-        public override void ResolveDeclarations(IReadOnlyCollection<QualifiedModuleName> modules, CancellationToken token)
+        protected override void ResolveDeclarations(IReadOnlyCollection<QualifiedModuleName> modules, IDictionary<string, ProjectDeclaration> projects, CancellationToken token)
         {
             if (!modules.Any())
             {
                 return;
             }
 
-            _projectDeclarations.Clear();
+            var parsingStageTimer = ParsingStageTimer.StartNew();
+
             token.ThrowIfCancellationRequested();
 
             var options = new ParallelOptions();
@@ -43,6 +46,7 @@ namespace Rubberduck.Parsing.VBA.DeclarationResolving
                     {
                         ResolveDeclarations(module,
                             _state.ParseTrees.Find(s => s.Key == module).Value,
+                            projects,
                             token);
                     }
                 );
@@ -56,6 +60,9 @@ namespace Rubberduck.Parsing.VBA.DeclarationResolving
                 _parserStateManager.SetStatusAndFireStateChanged(this, ParserState.ResolverError, token);
                 throw;
             }
+
+            parsingStageTimer.Stop();
+            parsingStageTimer.Log("Resolved user declaration in {0}ms.");
         }
     }
 }

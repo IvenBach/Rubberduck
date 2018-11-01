@@ -56,7 +56,7 @@ moduleConfig :
 ;
 
 moduleConfigProperty :
-    BEGINPROPERTY whiteSpace unrestrictedIdentifier (whiteSpace GUIDLITERAL)? endOfStatement
+    BEGINPROPERTY whiteSpace unrestrictedIdentifier (LPAREN numberLiteral RPAREN)? (whiteSpace GUIDLITERAL)? endOfStatement
         (moduleConfigProperty | moduleConfigElement)+
     ENDPROPERTY endOfStatement
 ;
@@ -681,8 +681,7 @@ builtInType :
 ;
 
 // 5.6.13.1 Argument Lists
-argumentList :
-    whiteSpace? (argument? (whiteSpace? COMMA whiteSpace? argument)*)??
+argumentList : whiteSpace? (argument? (whiteSpace? COMMA whiteSpace? argument)*)?? whiteSpace?
 ;
 
 requiredArgument : argument;
@@ -833,6 +832,7 @@ markerKeyword : AS;
 statementKeyword :
     CALL
     | CASE
+    | CIRCLE
     | CONST
     | DECLARE
     | DEFBOOL
@@ -878,12 +878,14 @@ statementKeyword :
     | ON
     | OPTION
     | PRIVATE
+    | PSET
     | PUBLIC
     | RAISEEVENT
     | REDIM
     | RESUME
     | RETURN
     | RSET
+    | SCALE
     | SELECT
     | SET
     | STATIC
@@ -923,8 +925,8 @@ commentOrAnnotation :
 remComment : REM whiteSpace? commentBody;
 comment : SINGLEQUOTE commentBody;
 commentBody : (~NEWLINE)*;
-annotationList : SINGLEQUOTE (AT annotation whiteSpace?)+ (COLON commentBody)?;
-annotation : annotationName annotationArgList?;
+annotationList : SINGLEQUOTE (AT annotation)+ (COLON commentBody)?;
+annotation : annotationName annotationArgList? whiteSpace?;
 annotationName : unrestrictedIdentifier;
 annotationArgList : 
     whiteSpace annotationArg

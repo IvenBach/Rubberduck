@@ -5,6 +5,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Rubberduck.Common;
 using Rubberduck.Interaction;
+using Rubberduck.Parsing;
 using Rubberduck.Parsing.Grammar;
 using Rubberduck.Parsing.Rewriter;
 using Rubberduck.Parsing.Symbols;
@@ -152,7 +153,12 @@ namespace Rubberduck.Refactorings.MoveCloserToUsage
 
         private void InsertNewDeclaration()
         {
-            var newVariable = $"Dim {_target.IdentifierName} As {_target.AsTypeName}{Environment.NewLine}";
+            var subscripts = _target.Context.GetDescendent<VBAParser.SubscriptsContext>()?.GetText() ?? string.Empty;
+            var identifier = _target.IsArray ? $"{_target.IdentifierName}({subscripts})" : _target.IdentifierName;
+
+            var newVariable = _target.AsTypeContext is null
+                ? $"{Tokens.Dim} {identifier} {Tokens.As} {Tokens.Variant}{Environment.NewLine}"
+                : $"{Tokens.Dim} {identifier} {Tokens.As} {(_target.IsSelfAssigned ? Tokens.New + " " : string.Empty)}{_target.AsTypeNameWithoutArrayDesignator}{Environment.NewLine}";
 
             var firstReference = _target.References.OrderBy(r => r.Selection.StartLine).First();
 
@@ -192,6 +198,7 @@ namespace Rubberduck.Refactorings.MoveCloserToUsage
         {
             foreach (var reference in references.OrderByDescending(o => o.Selection.StartLine).ThenByDescending(t => t.Selection.StartColumn))
             {
+                // todo: Grab `GetAncestor` and use that
                 var parent = reference.Context.Parent;
                 while (!(parent is VBAParser.MemberAccessExprContext) && parent.Parent != null)
                 {
@@ -199,6 +206,14 @@ namespace Rubberduck.Refactorings.MoveCloserToUsage
                 }
 
                 if (!(parent is VBAParser.MemberAccessExprContext))
+                {
+                    continue;
+                }
+
+                // member access might be to something unrelated to the rewritten target.
+                // check we're not accidentally overwriting some other member-access who just happens to be a parent context
+                var memberAccessContext = (VBAParser.MemberAccessExprContext)parent;
+                if (memberAccessContext.unrestrictedIdentifier().GetText() != _target.IdentifierName)
                 {
                     continue;
                 }

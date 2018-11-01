@@ -68,8 +68,9 @@ namespace Rubberduck.Navigation.CodeExplorer
                         var component = _projectsProvider.Component(qualifiedModuleName);
                         string parenthesizedName;
                         using (var properties = component.Properties)
+                        using (var nameProperty = properties["Name"])
                         {
-                            parenthesizedName = properties["Name"].Value.ToString() ?? string.Empty;
+                            parenthesizedName = nameProperty.Value.ToString() ?? string.Empty;
                         }
 
                         if (ContainsBuiltinDocumentPropertiesProperty())
@@ -110,9 +111,19 @@ namespace Rubberduck.Navigation.CodeExplorer
 
         private bool ContainsBuiltinDocumentPropertiesProperty()
         {
-            using (var properties = _projectsProvider.Component(Declaration.QualifiedName.QualifiedModuleName).Properties)
+            var component = _projectsProvider.Component(Declaration.QualifiedName.QualifiedModuleName);
+            using (var properties = component.Properties)
             {
-                return properties.Any(item => item.Name == "BuiltinDocumentProperties");
+                foreach (var property in properties)
+                using(property)
+                {
+                    if (property.Name == "BuiltinDocumentProperties")
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
         }
 

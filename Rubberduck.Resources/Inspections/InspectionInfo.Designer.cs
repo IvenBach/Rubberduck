@@ -79,6 +79,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An assignment is immediately overridden by another assignment or is never referenced..
+        /// </summary>
+        public static string AssignmentNotUsedInspection {
+            get {
+                return ResourceManager.GetString("AssignmentNotUsedInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A member is assigned True/False in different branches of an if statement with no other statements in the conditional. Use the condition directly to the member instead..
         /// </summary>
         public static string BooleanAssignedInIfElseInspection {
@@ -111,6 +120,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string DefTypeStatementInspection {
             get {
                 return ResourceManager.GetString("DefTypeStatementInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An annotation is specified multiple times, but is intended to be specified only once..
+        /// </summary>
+        public static string DuplicatedAnnotationInspection {
+            get {
+                return ResourceManager.GetString("DuplicatedAnnotationInspection", resourceCulture);
             }
         }
         
@@ -232,7 +250,7 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An annotation meant to be specified at module level cannot be used to annotate members; annotations meant to be annotate members cannot be used at module level; module and member annotations should only be specified once..
+        ///   Looks up a localized string similar to An annotation meant to be specified at module level cannot be used to annotate members; annotations meant to be annotate members cannot be used at module level..
         /// </summary>
         public static string IllegalAnnotationInspection {
             get {
@@ -304,6 +322,24 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IsMissing is only intended to be called on optional arguments, and will only return correct results if the type of the argument is &apos;Variant&apos; with no explicit default value. All other uses will return &apos;False&apos;..
+        /// </summary>
+        public static string IsMissingOnInappropriateArgumentInspection {
+            get {
+                return ResourceManager.GetString("IsMissingOnInappropriateArgumentInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IsMissing is only intended to be called on arguments of the containing procedure, and almost all other usages will return &apos;False&apos;. Passing any other expression to the function is the equivalent to &apos;VarType({expression}) = vbError&apos;, and in rare circumstances can cause the host application to crash..
+        /// </summary>
+        public static string IsMissingWithNonArgumentParameterInspection {
+            get {
+                return ResourceManager.GetString("IsMissingWithNonArgumentParameterInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A line label that is never jumpted to (&apos;GoTo&apos;, &apos;Resume&apos;, ...), serves no purpose. Consider removing it..
         /// </summary>
         public static string LineLabelNotUsedInspection {
@@ -358,6 +394,15 @@ namespace Rubberduck.Resources.Inspections {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modules without the &apos;@Folder&apos; annotation cannot receive custom groupings in the Code Explorer. .
+        /// </summary>
+        public static string ModuleWithoutFolderInspection {
+            get {
+                return ResourceManager.GetString("ModuleWithoutFolderInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A module-level variable used only in one procedure should be declared in that procedure..
         /// </summary>
         public static string MoveFieldCloserToUsageInspection {
@@ -381,15 +426,6 @@ namespace Rubberduck.Resources.Inspections {
         public static string MultipleDeclarationsInspection {
             get {
                 return ResourceManager.GetString("MultipleDeclarationsInspection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rubberduck only uses the first &apos;@Folder&apos; annotation in a code module; consider removing extraneous ones..
-        /// </summary>
-        public static string MultipleFolderAnnotationsInspection {
-            get {
-                return ResourceManager.GetString("MultipleFolderAnnotationsInspection", resourceCulture);
             }
         }
         
@@ -480,6 +516,15 @@ namespace Rubberduck.Resources.Inspections {
         public static string ObsoleteTypeHintInspection {
             get {
                 return ResourceManager.GetString("ObsoleteTypeHintInspection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On Local Error exists only for compatibility with previous versions of Visual Basic, and all Errors are treated as Local regardless of the Error statement. Use of this keyword inaccurately gives the impression that there is a distinction between types of error handling when there is not..
+        /// </summary>
+        public static string OnLocalErrorInspection {
+            get {
+                return ResourceManager.GetString("OnLocalErrorInspection", resourceCulture);
             }
         }
         

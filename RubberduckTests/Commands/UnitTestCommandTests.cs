@@ -6,12 +6,12 @@ using Moq;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Parsing.VBA;
 using Rubberduck.Settings;
-using Rubberduck.UI;
-using Rubberduck.UI.Command;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
 using RubberduckTests.Mocks;
 using Rubberduck.Interaction;
 using Rubberduck.VBEditor.SafeComWrappers;
+using Rubberduck.UI.UnitTesting.Commands;
+using Rubberduck.UnitTesting;
 
 namespace RubberduckTests.Commands
 {
@@ -27,6 +27,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 {0}";
 
@@ -56,6 +57,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 '@TestMethod
 Public Sub TestMethod1()
@@ -93,6 +95,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 Public Function TestMethod1() As Long
 End Function
@@ -129,6 +132,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 '@TestMethod
 Public Sub TestMethod1()
@@ -166,6 +170,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 '@TestMethod
 Public Sub TestMethod2()
@@ -203,6 +208,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 '@TestMethod
 Public Sub TestMethod1()
@@ -238,6 +244,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 '@TestMethod
 Public Function TestMethod1() As Long
@@ -273,6 +280,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 '@TestMethod
 Public Sub TestMethod1()
@@ -308,6 +316,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 '@TestMethod
 Public Sub TestMethod2()
@@ -401,6 +410,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 ";
 
@@ -423,6 +433,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 {0}";
 
@@ -482,6 +493,7 @@ Option Explicit
 Option Private Module
 
 '@TestModule
+
 Private Assert As Object
 ";
 
@@ -529,11 +541,13 @@ Private Assert As Object
             using (var state = MockParser.CreateAndParse(vbe.Object))
             {
                 var messageBox = new Mock<IMessageBox>();
+                var interaction = new Mock<IVBEInteraction>();
                 var settings = new Mock<ConfigurationLoader>(null, null, null, null, null, null, null, null);
                 var config = GetUnitTestConfig();
                 settings.Setup(x => x.LoadConfiguration()).Returns(config);
 
-                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object);
+
+                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object, interaction.Object);
                 addTestModuleCommand.Execute(null);
 
                 // mock suite auto-assigns "TestModule1" to the first component when we create the mock
@@ -557,11 +571,12 @@ Private Assert As Object
             using (var state = MockParser.CreateAndParse(vbe.Object))
             {
                 var messageBox = new Mock<IMessageBox>();
+                var interaction = new Mock<IVBEInteraction>();
                 var settings = new Mock<ConfigurationLoader>(null, null, null, null, null, null, null, null);
                 var config = GetUnitTestConfig();
                 settings.Setup(x => x.LoadConfiguration()).Returns(config);
 
-                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object);
+                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object, interaction.Object);
                 addTestModuleCommand.Execute(null);
 
                 var declaration = state.DeclarationFinder.FindProject("TestProject1");
@@ -584,11 +599,12 @@ Private Assert As Object
             using (var state = MockParser.CreateAndParse(vbe.Object))
             {
                 var messageBox = new Mock<IMessageBox>();
+                var interaction = new Mock<IVBEInteraction>();
                 var settings = new Mock<ConfigurationLoader>(null, null, null, null, null, null, null, null);
                 var config = GetUnitTestConfig();
                 settings.Setup(x => x.LoadConfiguration()).Returns(config);
 
-                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object);
+                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object, interaction.Object);
                 addTestModuleCommand.Execute(null);
 
                 var declaration = state.DeclarationFinder.FindProject("TestProject1");
@@ -611,11 +627,12 @@ Private Assert As Object
             using (var state = MockParser.CreateAndParse(vbe.Object))
             {
                 var messageBox = new Mock<IMessageBox>();
+                var interaction = new Mock<IVBEInteraction>();
                 var settings = new Mock<ConfigurationLoader>(null, null, null, null, null, null, null, null);
                 var config = GetUnitTestConfig();
                 settings.Setup(x => x.LoadConfiguration()).Returns(config);
 
-                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object);
+                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object, interaction.Object);
                 addTestModuleCommand.Execute(null);
 
                 var declaration = state.DeclarationFinder.FindProject("TestProject1");
@@ -682,6 +699,7 @@ End Property";
             using (var state = MockParser.CreateAndParse(vbe.Object))
             {
                 var settings = new Mock<ConfigurationLoader>(null, null, null, null, null, null, null, null);
+                var interaction = new Mock<IVBEInteraction>();
                 var config = GetUnitTestConfig();
                 settings.Setup(x => x.LoadConfiguration()).Returns(config);
 
@@ -689,7 +707,7 @@ End Property";
                 var module = state.DeclarationFinder.FindStdModule("TestModule1", project);
 
                 var messageBox = new Mock<IMessageBox>();
-                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object);
+                var addTestModuleCommand = new AddTestModuleCommand(vbe.Object, state, settings.Object, messageBox.Object, interaction.Object);
                 addTestModuleCommand.Execute(module);
 
                 var testModule = state.DeclarationFinder.FindStdModule("TestModule2", project);

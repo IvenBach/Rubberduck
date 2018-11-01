@@ -14,10 +14,11 @@ using System.Reflection;
 using System.Threading;
 using Rubberduck.Parsing.PreProcessing;
 using Rubberduck.Parsing.Rewriter;
-using Rubberduck.Parsing.Symbols.ParsingExceptions;
 using Rubberduck.Parsing.VBA.ComReferenceLoading;
+using Rubberduck.Parsing.VBA.DeclarationCaching;
 using Rubberduck.Parsing.VBA.DeclarationResolving;
 using Rubberduck.Parsing.VBA.Parsing;
+using Rubberduck.Parsing.VBA.Parsing.ParsingExceptions;
 using Rubberduck.Parsing.VBA.ReferenceManagement;
 using Rubberduck.VBEditor.ComManagement;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
@@ -71,8 +72,9 @@ namespace RubberduckTests.Mocks
             var supertypeClearer = new SynchronousSupertypeClearer(state); 
             var parserStateManager = new SynchronousParserStateManager(state);
             var referenceRemover = new SynchronousReferenceRemover(state, moduleToModuleReferenceManager);
-            var baseReferencedDeclarationsCollector = new SerializedReferencedDeclarationsCollector(path);
-            var referencedDeclarationsCollector = new StaticCachingReferencedDeclarationsCollectorDecorator(baseReferencedDeclarationsCollector);
+            var baseComDeserializer = new XmlComProjectSerializer(path);
+            var comDeserializer = new StaticCachingComDeserializerDecorator(baseComDeserializer);
+            var referencedDeclarationsCollector = new SerializedReferencedDeclarationsCollector(comDeserializer);
             var comSynchronizer = new SynchronousCOMReferenceSynchronizer(
                 state, 
                 parserStateManager,
@@ -160,23 +162,5 @@ namespace RubberduckTests.Mocks
                 DeclarationType.Procedure, DeclarationType.Function, DeclarationType.PropertyGet,
                 DeclarationType.PropertyLet, DeclarationType.PropertySet
             });
-
-        // ReSharper disable once UnusedMember.Global; used by RubberduckWeb to load serialized declarations.
-        public static void AddTestLibrary(this RubberduckParserState state, Stream stream)
-        {
-            var reader = new XmlPersistableDeclarations();
-            var deserialized = reader.Load(stream);
-            AddTestLibrary(state, deserialized);
-        }
-
-        private static void AddTestLibrary(RubberduckParserState state, SerializableProject deserialized)
-        {
-            var declarations = deserialized.Unwrap();
-
-            foreach (var declaration in declarations)
-            {
-                state.AddDeclaration(declaration);
-            }
-        }
     }
 }

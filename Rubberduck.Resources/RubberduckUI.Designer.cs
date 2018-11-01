@@ -1058,6 +1058,33 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ignore.
+        /// </summary>
+        public static string EmptyLineHandling_Ignore {
+            get {
+                return ResourceManager.GetString("EmptyLineHandling_Ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indent.
+        /// </summary>
+        public static string EmptyLineHandling_Indent {
+            get {
+                return ResourceManager.GetString("EmptyLineHandling_Indent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string EmptyLineHandling_Remove {
+            get {
+                return ResourceManager.GetString("EmptyLineHandling_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to to parse and process the projects in the VBE..
         /// </summary>
         public static string EmptyUIRefreshMessage {
@@ -1637,6 +1664,15 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter by.
+        /// </summary>
+        public static string GroupingGrid_FilterBy {
+            get {
+                return ResourceManager.GetString("GroupingGrid_FilterBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grouping.
         /// </summary>
         public static string GroupingGrid_GroupingStyle {
@@ -1795,6 +1831,15 @@ namespace Rubberduck.Resources {
         public static string IndenterSettings_CodeSampleHeader {
             get {
                 return ResourceManager.GetString("IndenterSettings_CodeSampleHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Empty line handling:.
+        /// </summary>
+        public static string IndenterSettings_EmptyLineHeading {
+            get {
+                return ResourceManager.GetString("IndenterSettings_EmptyLineHeading", resourceCulture);
             }
         }
         
@@ -2001,11 +2046,56 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filter by Description:.
+        ///   Looks up a localized string similar to Error.
         /// </summary>
-        public static string InspectionSettings_FilterDescription {
+        public static string InspectionResults_FilterByError {
             get {
-                return ResourceManager.GetString("InspectionSettings_FilterDescription", resourceCulture);
+                return ResourceManager.GetString("InspectionResults_FilterByError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hint.
+        /// </summary>
+        public static string InspectionResults_FilterByHint {
+            get {
+                return ResourceManager.GetString("InspectionResults_FilterByHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suggestion.
+        /// </summary>
+        public static string InspectionResults_FilterBySuggestion {
+            get {
+                return ResourceManager.GetString("InspectionResults_FilterBySuggestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string InspectionResults_FilterByWarning {
+            get {
+                return ResourceManager.GetString("InspectionResults_FilterByWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string InspectionSettings_FilterByDescription {
+            get {
+                return ResourceManager.GetString("InspectionSettings_FilterByDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Severity:.
+        /// </summary>
+        public static string InspectionSettings_FilterBySeverity {
+            get {
+                return ResourceManager.GetString("InspectionSettings_FilterBySeverity", resourceCulture);
             }
         }
         
@@ -2042,6 +2132,15 @@ namespace Rubberduck.Resources {
         public static string Issue {
             get {
                 return ResourceManager.GetString("Issue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Czech.
+        /// </summary>
+        public static string Language_CS {
+            get {
+                return ResourceManager.GetString("Language_CS", resourceCulture);
             }
         }
         
@@ -2857,8 +2956,8 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Renaming to &apos;{0}&apos; clashes with &apos;{1}&apos; in the same scope.
-        ///Are you sure you want to proceed with this rename?.
+        ///   Looks up a localized string similar to &apos;{0}&apos; conflicts with an existing name. Renaming &apos;{1}&apos; to &apos;{0}&apos; may result in uncompilable code or a change in logic.
+        ///Do you want to proceed with this rename?.
         /// </summary>
         public static string RenameDialog_ConflictingNames {
             get {

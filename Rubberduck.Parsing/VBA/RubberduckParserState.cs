@@ -6,19 +6,20 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.VBEditor;
 using Rubberduck.Parsing.Annotations;
 using NLog;
 using Rubberduck.Parsing.Rewriter;
-using Rubberduck.Parsing.Symbols.ParsingExceptions;
 using Rubberduck.Parsing.VBA.Parsing;
 using Rubberduck.VBEditor.ComManagement;
 using Rubberduck.VBEditor.Events;
 using Rubberduck.VBEditor.SafeComWrappers;
 using Rubberduck.VBEditor.SafeComWrappers.Abstract;
-using Antlr4.Runtime;
+using Rubberduck.Parsing.VBA.DeclarationCaching;
+using Rubberduck.Parsing.VBA.Parsing.ParsingExceptions;
 
 // ReSharper disable LoopCanBeConvertedToQuery
 
@@ -273,7 +274,7 @@ namespace Rubberduck.Parsing.VBA
                 return;
             }
 
-            Logger.Debug("Component '{0}' was added.", e.Component.Name);
+            Logger.Debug("Component '{0}' was added.", e.QualifiedModuleName.ComponentName);
             OnParseRequested(sender);
         }
 
@@ -284,7 +285,7 @@ namespace Rubberduck.Parsing.VBA
                 return;
             }
 
-            Logger.Debug("Component '{0}' was removed.", e.Component.Name);
+            Logger.Debug("Component '{0}' was removed.", e.QualifiedModuleName.ComponentName);
             OnParseRequested(sender);
         }
 
@@ -295,15 +296,14 @@ namespace Rubberduck.Parsing.VBA
                 return;
             }
 
-            Logger.Debug("Component '{0}' was renamed to '{1}'.", e.OldName, e.Component.Name);
+            Logger.Debug("Component '{0}' was renamed to '{1}'.", e.OldName, e.QualifiedModuleName.ComponentName);
 
             //todo: Find out for which situation this drastic (and problematic) cache invalidation has been introduced.
             if (ComponentIsWorksheet(e))
             {
                 RefreshProject(e.ProjectId);
-                Logger.Debug("Project '{0}' was removed.", e.Component.Name);
+                Logger.Debug("Project '{0}' was removed.", e.QualifiedModuleName.ComponentName);
             }
-
             OnParseRequested(sender);
         }
 
@@ -465,7 +465,7 @@ namespace Rubberduck.Parsing.VBA
         {
             if (_moduleStates.IsEmpty)
             {
-                return ParserState.Pending;
+                return ParserState.Ready;
             }
 
             var moduleStates = new List<ParserState>();
@@ -481,7 +481,7 @@ namespace Rubberduck.Parsing.VBA
 
             if (moduleStates.Count == 0)
             {
-                return ParserState.Pending;
+                return ParserState.Ready;
             }
 
             var state = moduleStates[0];
@@ -911,11 +911,15 @@ namespace Rubberduck.Parsing.VBA
             {
                 try
                 {
-                    foreach (var component in project.VBComponents)
+                    using (var components = project.VBComponents)
                     {
-                        if (IsNewOrModified(component))
+                        foreach (var component in components)
+                        using (component)
                         {
-                            return true;
+                            if (IsNewOrModified(component))
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -1043,14 +1047,13 @@ namespace Rubberduck.Parsing.VBA
             }
         }
 
-        public void RemoveBuiltInDeclarations(ReferenceInfo reference)
+        public void RemoveBuiltInDeclarations(QualifiedModuleName projectQmn)
         {
-            var key = new QualifiedModuleName(reference);
-            ClearAsTypeDeclarationPointingToReference(key);
-            if (_moduleStates.TryRemove(key, out var moduleState))
+            ClearAsTypeDeclarationPointingToReference(projectQmn);
+            if (_moduleStates.TryRemove(projectQmn, out var moduleState))
             {
                 moduleState?.Dispose();
-                Logger.Warn("Could not remove declarations for removed reference '{0}' ({1}).", reference.Name, QualifiedModuleName.GetProjectId(reference));
+                Logger.Warn("Could not remove declarations for removed reference '{0}' ({1}).", projectQmn.Name, projectQmn.ProjectId);
             }
         }
         

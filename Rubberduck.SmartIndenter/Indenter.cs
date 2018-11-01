@@ -30,6 +30,8 @@ namespace Rubberduck.SmartIndenter
                     return;
                 }
 
+                var initialSelection = GetSelection(pane).Collapse();
+
                 using (var module = pane.CodeModule)
                 {
                     var selection = GetSelection(pane);
@@ -48,9 +50,10 @@ namespace Rubberduck.SmartIndenter
                     selection = new Selection(startLine, 1, endLine, 1);
                     using (var component = module.Parent)
                     {
-                        Indent(component, selection);
-                    }
+                        Indent(component, selection, true);
+                    }                   
                 }
+                ResetSelection(pane, initialSelection);
             }
         }
 
@@ -66,13 +69,17 @@ namespace Rubberduck.SmartIndenter
                     return;
                 }
 
+                var initialSelection = GetSelection(pane).Collapse();
+
                 using (var module = pane.CodeModule)
                 {
                     using (var component = module.Parent)
                     {
                         Indent(component);
-                    }
-                }                
+                    }                   
+                }
+
+                ResetSelection(pane, initialSelection);
             }
         }
 
@@ -81,14 +88,47 @@ namespace Rubberduck.SmartIndenter
         /// </summary>
         public void IndentCurrentProject()
         {
-            var project = _vbe.ActiveVBProject;
-            if (project.Protection == ProjectProtection.Locked)
+            using (var pane = _vbe.ActiveCodePane)
             {
-                return;
+                var initialSelection = pane == null || pane.IsWrappingNullReference ? default : GetSelection(pane).Collapse();
+
+                var project = _vbe.ActiveVBProject;
+                if (project.Protection == ProjectProtection.Locked)
+                {
+                    return;
+                }
+
+                foreach (var component in project.VBComponents)
+                {
+                    Indent(component);
+                }
+
+                ResetSelection(pane, initialSelection);
             }
-            foreach (var component in project.VBComponents)
+        }
+
+        private void ResetSelection(ICodePane codePane, Selection initialSelection)
+        {
+            using (var window = _vbe.ActiveWindow)
             {
-                Indent(component);
+                if (initialSelection == default || codePane == null || window == null ||
+                    window.IsWrappingNullReference || window.Type != WindowKind.CodeWindow ||
+                    codePane.IsWrappingNullReference)
+                {
+                    return;
+                }
+            }
+
+            using (var module = codePane.CodeModule)
+            {
+                // This will only "ballpark it" for now - it sets the absolute line in the module, not necessarily
+                // the specific LoC. That will be a TODO when the parse tree is used to indent. For the time being,
+                // maintaining that is ridiculously difficult vis-a-vis the payoff if the vertical spacing is 
+                // changed.
+                var lines = module.CountOfLines;
+                codePane.Selection = lines < initialSelection.StartLine
+                    ? new Selection(lines, initialSelection.StartColumn, lines, initialSelection.StartColumn)
+                    : initialSelection;
             }
         }
 
@@ -126,7 +166,8 @@ namespace Rubberduck.SmartIndenter
         /// </summary>
         /// <param name="component">The VBComponent to indent</param>
         /// <param name="selection">The selection to indent</param>
-        private void Indent(IVBComponent component, Selection selection)
+        /// <param name="procedure">Whether the selection is a single procedure</param>
+        private void Indent(IVBComponent component, Selection selection, bool procedure = false)
         {
             using (var module = component.CodeModule)
             {
@@ -139,7 +180,7 @@ namespace Rubberduck.SmartIndenter
                 var codeLines = module.GetLines(selection.StartLine, selection.LineCount).Replace("\r", string.Empty)
                     .Split('\n');
 
-                var indented = Indent(codeLines, false);
+                var indented = Indent(codeLines, false, procedure);
 
                 var start = selection.StartLine;
                 var lines = selection.LineCount;
