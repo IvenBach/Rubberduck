@@ -136,23 +136,23 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No references were found for project reference &apos;{0}&apos;..
+        ///   Looks up a localized string similar to No uses were found for project reference &apos;{0}&apos;..
         /// </summary>
         public static string AllReferences_NoneFoundReference {
             get {
                 return ResourceManager.GetString("AllReferences_NoneFoundReference", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Search for reference &apos;{0}&apos; returned {1} uses. Displaying the references may negatively impact performance. Continue?.
+        ///   Looks up a localized string similar to Search for uses of reference &apos;{0}&apos; has returned {1} results. Displaying them may negatively impact performance. Continue?.
         /// </summary>
         public static string AllReferences_PerformanceWarning {
             get {
                 return ResourceManager.GetString("AllReferences_PerformanceWarning", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Apply.
         /// </summary>
@@ -1620,7 +1620,7 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set DPI Unaware.
+        ///   Looks up a localized string similar to Correction for high-resolution display scalings.
         /// </summary>
         public static string GeneralSettings_SetDpiUnaware {
             get {
@@ -1683,6 +1683,15 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string GroupingGrid_Filter {
+            get {
+                return ResourceManager.GetString("GroupingGrid_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter by.
         /// </summary>
         public static string GroupingGrid_FilterBy {
@@ -1737,11 +1746,29 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By inspection.
+        /// </summary>
+        public static string GroupingStyle_ByName {
+            get {
+                return ResourceManager.GetString("GroupingStyle_ByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By outcome.
         /// </summary>
         public static string GroupingStyle_ByOutcome {
             get {
                 return ResourceManager.GetString("GroupingStyle_ByOutcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By severity.
+        /// </summary>
+        public static string GroupingStyle_BySeverity {
+            get {
+                return ResourceManager.GetString("GroupingStyle_BySeverity", resourceCulture);
             }
         }
         
@@ -2065,6 +2092,24 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse all.
+        /// </summary>
+        public static string InspectionResults_CollapseAll {
+            get {
+                return ResourceManager.GetString("InspectionResults_CollapseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand all.
+        /// </summary>
+        public static string InspectionResults_ExpandAll {
+            get {
+                return ResourceManager.GetString("InspectionResults_ExpandAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string InspectionResults_FilterByError {
@@ -2265,37 +2310,34 @@ namespace Rubberduck.Resources {
                 return ResourceManager.GetString("MakeActiveWorkbookReferenceExplicit", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Make ActiveWorkbook reference explicit.
+        ///   Looks up a localized string similar to Member Attribute Recovery Failure .
         /// </summary>
-        public static string MemberAttributeRecoveryFailureCaption
-        {
+        public static string MemberAttributeRecoveryFailureCaption {
             get {
                 return ResourceManager.GetString("MemberAttributeRecoveryFailureCaption", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Make ActiveWorkbook reference explicit.
+        ///   Looks up a localized string similar to Member attributes for the following modules could not be recovered because they could no longer be found. {0}.
         /// </summary>
-        public static string MemberAttributeRecoveryMembersNotFoundMessage
-        {
+        public static string MemberAttributeRecoveryMembersNotFoundMessage {
             get {
                 return ResourceManager.GetString("MemberAttributeRecoveryMembersNotFoundMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Make ActiveWorkbook reference explicit.
+        ///   Looks up a localized string similar to Failed to recover member attributes..
         /// </summary>
-        public static string MemberAttributeRecoveryRewriteFailedMessage
-        {
+        public static string MemberAttributeRecoveryRewriteFailedMessage {
             get {
                 return ResourceManager.GetString("MemberAttributeRecoveryRewriteFailedMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -2650,14 +2692,14 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PerformanceWarningCaption.
+        ///   Looks up a localized string similar to Performance Warning.
         /// </summary>
         public static string PerformanceWarningCaption {
             get {
                 return ResourceManager.GetString("PerformanceWarningCaption", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -2922,7 +2964,7 @@ namespace Rubberduck.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Word Documents({0})|{0}.
+        ///   Looks up a localized string similar to Word Documents ({0})|{0}.
         /// </summary>
         public static string References_BrowseFilterWord {
             get {
