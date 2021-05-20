@@ -612,4 +612,7 @@ Do you want to proceed?</value>
   <data name="AnnotationArgument_ValidationError_NotANumber" xml:space="preserve">
     <value>Annotation arguments of type 'Number' have to be a valid number in integer or floating point format.</value>
   </data>
+  <data name="AddNewComponent_Caption" xml:space="preserve">
+    <value>Add New Component</value>
+  </data>
 </root>

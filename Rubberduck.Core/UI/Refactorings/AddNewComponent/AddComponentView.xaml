@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="Rubberduck.UI.Refactorings.AddNewComponent.AddComponentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Rubberduck.UI.Refactorings.AddNewComponent"
+             mc:Ignorable="d"
+             d:DesignHeight="156" d:DesignWidth="400" d:DataContext="{d:DesignInstance local:AddComponentViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Controls/ToolBar.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="TextBox">
+                <Setter Property="Margin" Value="0,2" />
+            </Style>
+        </Grid.Resources>
+        <StackPanel Grid.Row="0"
+                    Background="{StaticResource BackgroundLightBrush}">
+            <Label Content="Add new component" FontWeight="Bold" />
+        </StackPanel>
+        <Grid Grid.Row="1"
+              Margin="5" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="115" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0"
+                   HorizontalAlignment="Right"
+                   Content="Component name:" />
+            <TextBox x:Name="componentName" Grid.Row="0" Grid.Column="1"
+                     Text="{Binding ComponentName, Mode=TwoWay}"/>
+
+            <Label Grid.Row="1" Grid.Column="0"
+                   HorizontalAlignment="Right"
+                   Content="Folder:" />
+            <TextBox Grid.Row="1" Grid.Column="1"
+                     Text="{Binding Folder, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="2"
+              Background="{x:Static SystemColors.ControlDarkBrush}"
+              Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2">
+            <Grid HorizontalAlignment="Right"
+                  Margin="5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="SettingsButtons" />
+                    <ColumnDefinition SharedSizeGroup="SettingsButtons" />
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="20" />
+                        <Setter Property="Margin" Value="5,0" />
+                        <Setter Property="Margin" Value="10,0" />
+                    </Style>
+                </Grid.Resources>
+                <Button Grid.Column="0"
+                        Content="{Resx ResxName=Rubberduck.Resources.RubberduckUI, Key=OK}"
+                        IsDefault="True"
+                        Command="{Binding OkButtonCommand}" />
+                <Button Grid.Column ="1"
+                        Content="{Resx ResxName=Rubberduck.Resources.RubberduckUI, Key=CancelButtonText}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

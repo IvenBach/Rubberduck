@@ -5,6 +5,7 @@ using Rubberduck.VBEditor.Events;
 using Rubberduck.VBEditor.SafeComWrappers;
 using Rubberduck.VBEditor.Utility;
 
+
 namespace Rubberduck.UI.CodeExplorer.Commands
 {
     public class AddStdModuleCommand : AddComponentCommandBase
@@ -12,10 +13,10 @@ namespace Rubberduck.UI.CodeExplorer.Commands
         private readonly IAddComponentService _nonCodeExplorerAddComponentService;
 
         public AddStdModuleCommand(
-        ICodeExplorerAddComponentService addComponentService, 
+        ICodeExplorerAddComponentService addComponentService,
         IVbeEvents vbeEvents,
         IProjectsProvider projectsProvider,
-        IAddComponentService nonCodeExplorerAddComponentService) 
+        IAddComponentService nonCodeExplorerAddComponentService)
             : base(addComponentService, vbeEvents, projectsProvider)
         {
             _nonCodeExplorerAddComponentService = nonCodeExplorerAddComponentService;
@@ -27,6 +28,7 @@ namespace Rubberduck.UI.CodeExplorer.Commands
 
         protected override void OnExecute(object parameter)
         {
+
             AddComponent(parameter as CodeExplorerItemViewModel);
         }
 
@@ -40,18 +42,22 @@ namespace Rubberduck.UI.CodeExplorer.Commands
             var projectId = topmostParent.QualifiedSelection.Value.QualifiedName.ProjectId;
 
             var possibleFolder = (parameter as ICodeExplorerNode).Description;
-            var folderAttribute = string.IsNullOrEmpty(possibleFolder)
+
+            var model = new Rubberduck.Refactorings.AddComponent.AddComponentModel("Module1", possibleFolder);
+
+            var foo = new Rubberduck.UI.CodeExplorer.AddNewComponent.AddComponentPresenter(model, null);
+            var model2 = foo.Show();
+
+            var folderAttribute = string.IsNullOrEmpty(model2.Folder)
                 ? string.Empty
-                : System.Environment.NewLine + $@"'@Folder(""{possibleFolder}"")";
-            
-            //prompt for ComponentName & Annotations
-            var componentName = "RenamedStandardModule";
-            var code = $@"Attribute VB_Name = ""{componentName}""{folderAttribute}
+                : System.Environment.NewLine + $@"'@Folder(""{model2.Folder}"")";
+
+            var code = $@"Attribute VB_Name = ""{model2.ComponentName}""{folderAttribute}
 Option Explicit
 
 ";
-            
-            _nonCodeExplorerAddComponentService.AddComponentWithAttributes(projectId, ComponentType, code, componentName: "NonDefaultName");
+
+            _nonCodeExplorerAddComponentService.AddComponentWithAttributes(projectId, ComponentType, code, componentName: model2.ComponentName);
         }
     }
 }

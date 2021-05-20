@@ -61,6 +61,15 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Component.
+        /// </summary>
+        public static string AddNewComponent_Caption {
+            get {
+                return ResourceManager.GetString("AddNewComponent_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string AnnotateDeclarationDialog_AddArgumentButtonLabel {
@@ -205,7 +214,7 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Annotation arguments of type &apos;Number&apos; have to be a valid number in integer of floating point format..
+        ///   Looks up a localized string similar to Annotation arguments of type &apos;Number&apos; have to be a valid number in integer or floating point format..
         /// </summary>
         public static string AnnotationArgument_ValidationError_NotANumber {
             get {
