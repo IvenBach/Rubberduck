@@ -152,6 +152,9 @@
     <Compile Update="UI\Settings\IgnoredProjectsSettingsView.xaml.cs">
       <DependentUpon>IgnoredProjectsSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\CodeExplorer\AddNewcomponent\AddComponentView.xaml.cs">
+      <DependentUpon>AddComponentView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
