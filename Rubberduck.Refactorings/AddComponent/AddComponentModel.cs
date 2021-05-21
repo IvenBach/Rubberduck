@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rubberduck.Refactorings.AddComponent
 {
-    public class AddComponentModel
+    public class AddComponentModel : IRefactoringModel
     {
         public string ComponentName { get; set; }
         public string Folder { get; set; }

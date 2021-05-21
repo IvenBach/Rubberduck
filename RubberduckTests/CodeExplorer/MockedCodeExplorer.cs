@@ -219,7 +219,8 @@ namespace RubberduckTests.CodeExplorer
         {
             var codePaneComponentSourceCodeHandler = new CodeModuleComponentSourceCodeHandler();
             var nonCodeExplorerAddComponentService = new AddComponentService(State.ProjectsProvider, codePaneComponentSourceCodeHandler, codePaneComponentSourceCodeHandler);
-            ViewModel.AddStdModuleCommand = new AddStdModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider, nonCodeExplorerAddComponentService);
+            Rubberduck.UI.Refactorings.IRefactoringDialogFactory dialogFactory = null;
+            ViewModel.AddStdModuleCommand = new AddStdModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider, nonCodeExplorerAddComponentService, dialogFactory);
             return this;
         }
 
