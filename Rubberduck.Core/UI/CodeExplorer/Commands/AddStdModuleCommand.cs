@@ -53,7 +53,7 @@ namespace Rubberduck.UI.CodeExplorer.Commands
 
             var folderAttribute = string.IsNullOrEmpty(model2.Folder)
                 ? string.Empty
-                : System.Environment.NewLine + $@"'@Folder(""{model2.Folder}"")";
+                : System.Environment.NewLine + $@"'@Folder ""{model2.Folder}""";
 
             var code = $@"Attribute VB_Name = ""{model2.ComponentName}""{folderAttribute}
 Option Explicit

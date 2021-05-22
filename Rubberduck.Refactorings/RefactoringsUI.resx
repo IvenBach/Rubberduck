@@ -615,4 +615,13 @@ Do you want to proceed?</value>
   <data name="AddNewComponent_Caption" xml:space="preserve">
     <value>Add New Component</value>
   </data>
+  <data name="AddNewComponent_TitleText" xml:space="preserve">
+    <value>Add new component</value>
+  </data>
+  <data name="AddNewComponent_ComponentNameLabelText" xml:space="preserve">
+    <value>Component name:</value>
+  </data>
+  <data name="AddNewComponent_FolderLabelText" xml:space="preserve">
+    <value>Folder:</value>
+  </data>
 </root>

@@ -26,30 +26,36 @@
         </Grid.Resources>
         <StackPanel Grid.Row="0"
                     Background="{StaticResource BackgroundLightBrush}">
-            <Label Content="Add new component" FontWeight="Bold" />
+            <Label Content="{Resx ResxName=Rubberduck.Refactorings.RefactoringsUI, Key=AddNewComponent_TitleText}" FontWeight="Bold" />
         </StackPanel>
         <Grid Grid.Row="1"
-              Margin="5" Grid.ColumnSpan="2">
+              Margin="5"
+              VerticalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="115" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="HorizontalAlignment" Value="Right" />
+                </Style>
+            </Grid.Resources>
 
             <Label Grid.Row="0" Grid.Column="0"
-                   HorizontalAlignment="Right"
-                   Content="Component name:" />
+                   Content="{Resx ResxName=Rubberduck.Refactorings.RefactoringsUI, Key=AddNewComponent_ComponentNameLabelText}" />
             <TextBox x:Name="componentName" Grid.Row="0" Grid.Column="1"
-                     Text="{Binding ComponentName, Mode=TwoWay}"/>
+                     Style="{StaticResource TextBoxErrorStyle}"
+                     Text="{Binding ComponentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <Label Grid.Row="1" Grid.Column="0"
-                   HorizontalAlignment="Right"
-                   Content="Folder:" />
-            <TextBox Grid.Row="1" Grid.Column="1"
-                     Text="{Binding Folder, Mode=TwoWay}"/>
+                   Content="{Resx ResxName=Rubberduck.Refactorings.RefactoringsUI, Key=AddNewComponent_FolderLabelText}" />
+            <TextBox x:Name="Folder" Grid.Row="1" Grid.Column="1"
+                     Style="{StaticResource TextBoxErrorStyle}"
+                     Text="{Binding Folder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
         <Grid Grid.Row="2"
               Background="{x:Static SystemColors.ControlDarkBrush}"
@@ -65,14 +71,17 @@
                         <Setter Property="Height" Value="20" />
                         <Setter Property="Margin" Value="5,0" />
                         <Setter Property="Margin" Value="10,0" />
+                        <Setter Property="Padding" Value="10,0" />
                     </Style>
                 </Grid.Resources>
                 <Button Grid.Column="0"
                         Content="{Resx ResxName=Rubberduck.Resources.RubberduckUI, Key=OK}"
-                        IsDefault="True"
-                        Command="{Binding OkButtonCommand}" />
+                        Command="{Binding OkButtonCommand}"
+                        IsDefault="True" 
+                        IsEnabled="{Binding HasValidInputs}"/>
                 <Button Grid.Column ="1"
-                        Content="{Resx ResxName=Rubberduck.Resources.RubberduckUI, Key=CancelButtonText}" />
+                        Content="{Resx ResxName=Rubberduck.Resources.RubberduckUI, Key=CancelButtonText}"
+                        Command="{Binding CancelButtonCommand}" />
             </Grid>
         </Grid>
     </Grid>

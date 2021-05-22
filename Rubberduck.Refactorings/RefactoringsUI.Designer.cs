@@ -70,6 +70,33 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Component name:.
+        /// </summary>
+        public static string AddNewComponent_ComponentNameLabelText {
+            get {
+                return ResourceManager.GetString("AddNewComponent_ComponentNameLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder:.
+        /// </summary>
+        public static string AddNewComponent_FolderLabelText {
+            get {
+                return ResourceManager.GetString("AddNewComponent_FolderLabelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new component.
+        /// </summary>
+        public static string AddNewComponent_TitleText {
+            get {
+                return ResourceManager.GetString("AddNewComponent_TitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string AnnotateDeclarationDialog_AddArgumentButtonLabel {

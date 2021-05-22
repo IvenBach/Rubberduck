@@ -5,6 +5,7 @@ using Rubberduck.Refactorings;
 using Rubberduck.InternalApi.Extensions;
 using Rubberduck.Parsing.Symbols;
 using Rubberduck.Resources;
+using Rubberduck.Refactorings.Common;
 using Rubberduck.Refactorings.MoveToFolder;
 using Rubberduck.CodeAnalysis;
 
@@ -53,27 +54,8 @@ namespace Rubberduck.UI.Refactorings.MoveToFolder
         }
 
         private void ValidateFolder()
-        {
-            var errors = new List<string>();
-            
-            if (string.IsNullOrEmpty(NewFolder))
-            {
-                errors.Add(RefactoringsUI.MoveFolders_EmptyFolderName);
-            }
-            else
-            {
-                if (NewFolder.Any(char.IsControl))
-                {
-                    errors.Add(RefactoringsUI.MoveFolders_ControlCharacter);
-                }
-
-                if (NewFolder.Split(FolderExtensions.FolderDelimiter).Any(string.IsNullOrEmpty))
-                {
-                    errors.Add(RefactoringsUI.MoveFolders_EmptySubfolderName);
-                }
-            }
-
-            if (errors.Any())
+        {            
+            if (!CodeExplorerFolderPathValidator.IsFolderPathValid(NewFolder, out var errors))
             {
                 SetErrors(nameof(NewFolder), errors);
             }
