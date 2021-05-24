@@ -118,7 +118,19 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
 
         private bool UserConfirmsToProceedWithConflictingName(string componentName, Declaration conflictingDeclaration)
         {
-            var message = string.Format(RefactoringsUI.AddNewComponent_ConflictingDeclarations, componentName, conflictingDeclaration.QualifiedName.ToString(), componentName + "1");
+            var counter = 1;
+            var suffixedName = componentName + counter.ToString();
+            while (_declarationFinderProvider.DeclarationFinder
+                        .UserDeclarations(DeclarationType.Module)
+                        .Where(d => d.ProjectId == Model.ProjectId
+                                && d.IdentifierName.Equals(suffixedName))
+                        .Any())
+            {
+                counter++;
+                suffixedName = componentName + counter.ToString();
+            }
+
+            var message = string.Format(RefactoringsUI.AddNewComponent_ConflictingDeclarations, componentName, conflictingDeclaration.QualifiedName.ToString(), suffixedName);
             return _messageBox?.ConfirmYesNo(message, RefactoringsUI.AddNewComponent_Caption) ?? false;
         }
     }

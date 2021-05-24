@@ -79,7 +79,7 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The new name &apos;{0}&apos; conflicts with the name of an existing declaration &apos;{1}&apos;. If you choose to proceed the new component name, following default VBIDE behavior, will be suffixed with a numeric identifier. Resulting in a name similar to &apos;{2}&apos;.
+        ///   Looks up a localized string similar to The new name &apos;{0}&apos; conflicts with the name of an existing declaration &apos;{1}&apos;. If you choose to proceed the new component name will be suffixed resulting in &apos;{2}&apos;.
         ///Do you want to proceed with this rename?.
         /// </summary>
         public static string AddNewComponent_ConflictingDeclarations {
