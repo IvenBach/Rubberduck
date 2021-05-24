@@ -100,11 +100,12 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
             else
             {
                 var conflictingDeclarations = _declarationFinderProvider.DeclarationFinder
-                    .UserDeclarations(DeclarationType.Module) //.AllDeclarations.OfType(DeclarationType.Module)
-                    .Where(declaration => declaration.IdentifierName.Equals(ComponentName)); 
-
-                if (conflictingDeclarations != null
-                    && !UserConfirmsToProceedWithConflictingName(Model.ComponentName, Model.Target, conflictingDeclarations.FirstOrDefault()))
+                    .UserDeclarations(DeclarationType.Module)
+                    .Where(declaration => declaration.ProjectId == Model.ProjectId
+                            && declaration.IdentifierName.Equals(ComponentName)); 
+                
+                if (conflictingDeclarations.Any()
+                    && !UserConfirmsToProceedWithConflictingName(Model.ComponentName, conflictingDeclarations.FirstOrDefault()))
                 {
                     base.DialogCancel();
                 }
@@ -115,9 +116,9 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
             }
         }
 
-        private bool UserConfirmsToProceedWithConflictingName(string componentName, Declaration target, Declaration conflictingDeclaration)
+        private bool UserConfirmsToProceedWithConflictingName(string componentName, Declaration conflictingDeclaration)
         {
-            var message = string.Format(RefactoringsUI.RenameDialog_ConflictingNames, componentName, conflictingDeclaration.QualifiedName.ToString(), target.IdentifierName);
+            var message = string.Format(RefactoringsUI.AddNewComponent_ConflictingDeclarations, componentName, conflictingDeclaration.QualifiedName.ToString(), componentName + "1");
             return _messageBox?.ConfirmYesNo(message, RefactoringsUI.AddNewComponent_Caption) ?? false;
         }
     }

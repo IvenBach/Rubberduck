@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Rubberduck.Navigation.CodeExplorer;
+using Rubberduck.Refactorings.AddComponent;
+using Rubberduck.UI.CodeExplorer.AddNewComponent;
 using Rubberduck.UI.Refactorings;
 using Rubberduck.VBEditor.ComManagement;
 using Rubberduck.VBEditor.Events;
@@ -46,9 +48,9 @@ namespace Rubberduck.UI.CodeExplorer.Commands
 
             var possibleFolder = ParentFolder(parameter);
 
-            var model = new Rubberduck.Refactorings.AddComponent.AddComponentModel("Module1", possibleFolder);
+            var model = new AddComponentModel("Module1", possibleFolder, projectId);
 
-            var foo = new Rubberduck.UI.CodeExplorer.AddNewComponent.AddComponentPresenter(model, _dialogFactory);
+            var foo = new AddComponentPresenter(model, _dialogFactory);
             var model2 = foo.Show();
 
             var folderAttribute = string.IsNullOrEmpty(model2.Folder)

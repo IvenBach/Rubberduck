@@ -79,6 +79,16 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The new name &apos;{0}&apos; conflicts with the name of an existing declaration &apos;{1}&apos;. If you choose to proceed the new component name, following default VBIDE behavior, will be suffixed with a numeric identifier. Resulting in a name similar to &apos;{2}&apos;.
+        ///Do you want to proceed with this rename?.
+        /// </summary>
+        public static string AddNewComponent_ConflictingDeclarations {
+            get {
+                return ResourceManager.GetString("AddNewComponent_ConflictingDeclarations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder:.
         /// </summary>
         public static string AddNewComponent_FolderLabelText {
@@ -1218,7 +1228,7 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; conflicts with the name of the existing declaration &apos;{1}&apos;. Renaming &apos;{2}&apos; to &apos;{0}&apos; may result in uncompilable  code or a change in logic.
+        ///   Looks up a localized string similar to &apos;{0}&apos; conflicts with the name of the existing declaration &apos;{1}&apos;. Renaming &apos;{2}&apos; to &apos;{0}&apos; may result in uncompilable code or a change in logic.
         ///Do you want to proceed with this rename?.
         /// </summary>
         public static string RenameDialog_ConflictingNames {

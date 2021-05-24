@@ -507,7 +507,7 @@ Do you want to proceed?</value>
     <value>Rubberduck - Rename</value>
   </data>
   <data name="RenameDialog_ConflictingNames" xml:space="preserve">
-    <value>'{0}' conflicts with the name of the existing declaration '{1}'. Renaming '{2}' to '{0}' may result in uncompilable  code or a change in logic.
+    <value>'{0}' conflicts with the name of the existing declaration '{1}'. Renaming '{2}' to '{0}' may result in uncompilable code or a change in logic.
 Do you want to proceed with this rename?</value>
     <comment>{0}: NewName {1}: conflicting declaration {2}: CurrentName</comment>
   </data>
@@ -623,5 +623,10 @@ Do you want to proceed?</value>
   </data>
   <data name="AddNewComponent_FolderLabelText" xml:space="preserve">
     <value>Folder:</value>
+  </data>
+  <data name="AddNewComponent_ConflictingDeclarations" xml:space="preserve">
+    <value>The new name '{0}' conflicts with the name of an existing declaration '{1}'. If you choose to proceed the new component name, following default VBIDE behavior, will be suffixed with a numeric identifier. Resulting in a name similar to '{2}'.
+Do you want to proceed with this rename?</value>
+    <comment>{0}: NewName; {1}: conflicting declaration; {2}: suffixed unique name</comment>
   </data>
 </root>

@@ -11,11 +11,13 @@ namespace Rubberduck.Refactorings.AddComponent
     {
         public string ComponentName { get; set; }
         public string Folder { get; set; }
-        public ModuleDeclaration Target { get; }
-        public AddComponentModel(string componentName, string folder)
+        public string ProjectId { get; }
+
+        public AddComponentModel(string componentName, string folder, string projectId)
         {
             ComponentName = componentName;
             Folder = folder;
+            ProjectId = projectId;
         }
     }
 }
