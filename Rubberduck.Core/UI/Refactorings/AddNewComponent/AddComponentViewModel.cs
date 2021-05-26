@@ -79,7 +79,7 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
 
         private void ValidateFolderPath()
         {
-            if (!CodeExplorerFolderPathValidator.IsFolderPathValid(Folder, out var errors))
+            if (!CodeExplorerFolderPathValidator.IsFolderPathValid(Folder, false, out var errors))
             {
                 SetErrors(nameof(Folder), errors);
             }
