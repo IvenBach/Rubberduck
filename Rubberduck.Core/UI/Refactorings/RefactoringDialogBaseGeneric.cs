@@ -56,7 +56,7 @@ namespace Rubberduck.UI.Refactorings
         public new virtual RefactoringDialogResult ShowDialog()
         {
             // The return of ShowDialog is meaningless; we use the DialogResult which the commands set.
-            var result = base.ShowDialog();
+            var _ = base.ShowDialog();
             return DialogResult;
         }
 
