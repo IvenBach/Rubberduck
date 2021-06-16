@@ -625,7 +625,7 @@ Do you want to proceed?</value>
     <value>Folder:</value>
   </data>
   <data name="AddNewComponent_ConflictingDeclarations" xml:space="preserve">
-    <value>The new name '{0}' conflicts with the name of an existing declaration '{1}'. If you choose to proceed the new component name, following default VBIDE behavior, will be suffixed with a numeric identifier resulting in '{2}'.
+    <value>The new name '{0}' conflicts with the name of an existing declaration '{1}'. If you choose to proceed the new component name will be suffixed resulting in '{2}'.
 Do you want to proceed with this rename?</value>
     <comment>{0}: NewName; {1}: conflicting declaration; {2}: suffixed unique name</comment>
   </data>

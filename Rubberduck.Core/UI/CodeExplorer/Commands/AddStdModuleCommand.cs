@@ -33,7 +33,6 @@ namespace Rubberduck.UI.CodeExplorer.Commands
 
         protected override void OnExecute(object parameter)
         {
-
             AddComponent(parameter as CodeExplorerItemViewModel);
         }
 
@@ -48,21 +47,21 @@ namespace Rubberduck.UI.CodeExplorer.Commands
 
             var possibleFolder = ParentFolder(parameter);
 
-            var model = new AddComponentModel("Module1", possibleFolder, projectId);
+            var defaultModel = new AddComponentModel("Module1", possibleFolder, projectId);
 
-            var foo = new AddComponentPresenter(model, _dialogFactory);
-            var model2 = foo.Show();
+            var presenter = new AddComponentPresenter(defaultModel, _dialogFactory);
+            var userEditedModel = presenter.Show();
 
-            var folderAttribute = string.IsNullOrEmpty(model2.Folder)
+            var folderAttribute = string.IsNullOrEmpty(userEditedModel.Folder)
                 ? string.Empty
-                : System.Environment.NewLine + $@"'@Folder ""{model2.Folder}""";
+                : System.Environment.NewLine + $@"'@Folder ""{userEditedModel.Folder}""";
 
-            var code = $@"Attribute VB_Name = ""{model2.ComponentName}""{folderAttribute}
+            var code = $@"Attribute VB_Name = ""{userEditedModel.ComponentName}""{folderAttribute}
 Option Explicit
 
 ";
 
-            _nonCodeExplorerAddComponentService.AddComponentWithAttributes(projectId, ComponentType, code, componentName: model2.ComponentName);
+            _nonCodeExplorerAddComponentService.AddComponentWithAttributes(projectId, ComponentType, code, componentName: userEditedModel.ComponentName);
         }
 
         private string ParentFolder(object node)

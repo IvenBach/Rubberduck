@@ -20,6 +20,7 @@ using Rubberduck.SettingsProvider;
 using Rubberduck.Interaction;
 using Rubberduck.Parsing.Annotations;
 using Rubberduck.Refactorings;
+using Rubberduck.Refactorings.AddComponent;
 using Rubberduck.Refactorings.AddInterfaceImplementations;
 using Rubberduck.Refactorings.ExtractInterface;
 using Rubberduck.UI.Command.ComCommands;
@@ -219,8 +220,37 @@ namespace RubberduckTests.CodeExplorer
         {
             var codePaneComponentSourceCodeHandler = new CodeModuleComponentSourceCodeHandler();
             var nonCodeExplorerAddComponentService = new AddComponentService(State.ProjectsProvider, codePaneComponentSourceCodeHandler, codePaneComponentSourceCodeHandler);
-            Rubberduck.UI.Refactorings.IRefactoringDialogFactory dialogFactory = null;
-            ViewModel.AddStdModuleCommand = new AddStdModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider, nonCodeExplorerAddComponentService, dialogFactory);
+
+            var dialogMock = new Mock<IRefactoringDialog<AddComponentModel, IRefactoringView<AddComponentModel>, IRefactoringViewModel<AddComponentModel>>>();
+            dialogMock.Setup(m => m.ShowDialog())
+                .Returns(RefactoringDialogResult.Execute);
+            var dialogFactoryMock = new Mock<Rubberduck.UI.Refactorings.IRefactoringDialogFactory>();
+            dialogFactoryMock.Setup(mock => mock.CreateDialog
+                <
+                    AddComponentModel,
+                    IRefactoringView<AddComponentModel>,
+                    IRefactoringViewModel<AddComponentModel>,
+                    IRefactoringDialog<AddComponentModel, IRefactoringView<AddComponentModel>, IRefactoringViewModel<AddComponentModel>>
+                >(
+                    It.IsAny<Rubberduck.UI.Refactorings.DialogData>(),
+                    It.IsAny<AddComponentModel>(),
+                    It.IsAny<IRefactoringView<AddComponentModel>>(),
+                    It.IsAny<IRefactoringViewModel<AddComponentModel>>()
+                ))
+                .Returns(
+                    (
+                        Rubberduck.UI.Refactorings.DialogData dialogData,
+                        AddComponentModel addComponentModel,
+                        IRefactoringView<AddComponentModel> view,
+                        IRefactoringViewModel<AddComponentModel> viewModel
+                    ) =>
+                    {
+                        dialogMock.SetupGet(dialog => dialog.ViewModel.Model).Returns(() => addComponentModel);
+                        return dialogMock.Object;
+                    }
+                );
+            
+            ViewModel.AddStdModuleCommand = new AddStdModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider, nonCodeExplorerAddComponentService, dialogFactoryMock.Object);
             return this;
         }
 
