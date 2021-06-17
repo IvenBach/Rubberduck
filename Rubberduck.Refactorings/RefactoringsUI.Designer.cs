@@ -793,6 +793,15 @@ namespace Rubberduck.Refactorings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name &apos;{0}&apos; already exists in project &apos;{1}&apos;..
+        /// </summary>
+        public static string InvalidNameCriteria_IsNotUniqueName {
+            get {
+                return ResourceManager.GetString("InvalidNameCriteria_IsNotUniqueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to VBA Identifiers cannot be null or zero-length..
         /// </summary>
         public static string InvalidNameCriteria_IsNullOrEmpty {

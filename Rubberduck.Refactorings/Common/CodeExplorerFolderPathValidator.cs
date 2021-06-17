@@ -10,16 +10,16 @@ namespace Rubberduck.Refactorings.Common
 {
     public static class CodeExplorerFolderPathValidator
     {
-        public static bool IsFolderPathValid(string folderPath, bool treatEmptyPathAsError, out List<string> errors)
+        public static bool IsFolderPathValid(string folderPath, out List<string> errors, bool treatEmptyOrNullFolderPathAsError = true)
         {
             errors = new List<string>();
 
-            if (!treatEmptyPathAsError && string.IsNullOrEmpty(folderPath))
+            if (!treatEmptyOrNullFolderPathAsError && string.IsNullOrEmpty(folderPath))
             {
                 return true;
             }
 
-            if (treatEmptyPathAsError && string.IsNullOrEmpty(folderPath))
+            if (treatEmptyOrNullFolderPathAsError && string.IsNullOrEmpty(folderPath))
             {
                 errors.Add(RefactoringsUI.MoveFolders_EmptyFolderName);
             }

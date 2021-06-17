@@ -14,17 +14,18 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
 {
     public class AddComponentViewModel : RefactoringViewModelBase<AddComponentModel>
     {
-        private readonly IDeclarationFinderProvider _declarationFinderProvider;
-        private readonly IMessageBox _messageBox;
+        private readonly string _projectId;
+        private readonly RubberduckParserState _state;
 
-        public RubberduckParserState State { get; }
-
-        public AddComponentViewModel(RubberduckParserState state, AddComponentModel model, IMessageBox messageBox)
+        public AddComponentViewModel(RubberduckParserState state, AddComponentModel model)
             : base(model)
         {
-            State = state;
-            _declarationFinderProvider = state;
-            _messageBox = messageBox;
+            _state = state;
+
+            _projectId = model.ProjectId;
+
+            ValidateName();
+            ValidateFolderPath();
         }
 
         public string ComponentName
@@ -43,11 +44,20 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
             }
         }
 
-        public bool IsValidName => !GetErrors(nameof(IsValidName)).Cast<List<string>>().Any();
+        public bool IsValidName => !GetErrors(nameof(ComponentName))?.OfType<string>().Any() ?? true;
 
         private void ValidateName()
         {
             var errors = VBAIdentifierValidator.SatisfiedInvalidIdentifierCriteria(ComponentName, DeclarationType.Module).ToList();
+
+            var nameConflicts = _state.AllUserDeclarations
+                .Where(declaration => declaration.ProjectId == _projectId 
+                    && declaration.ComponentName.ToUpperInvariant().Equals(Model.ComponentName.ToUpperInvariant()))
+                .Any();
+            if (nameConflicts)
+            {
+                errors.Add(string.Format(RefactoringsUI.InvalidNameCriteria_IsNotUniqueName, Model.ComponentName, Model.ProjectId));
+            }
 
             if (errors.Any())
             {
@@ -75,11 +85,11 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
             }
         }
 
-        public bool IsValidFolder => !GetErrors(nameof(IsValidFolder)).Cast<List<string>>().Any();
+        public bool IsValidFolder => !GetErrors(nameof(Folder)).OfType<string>().Any();
 
         private void ValidateFolderPath()
         {
-            if (!CodeExplorerFolderPathValidator.IsFolderPathValid(Folder, false, out var errors))
+            if (!CodeExplorerFolderPathValidator.IsFolderPathValid(Folder, out var errors, false))
             {
                 SetErrors(nameof(Folder), errors);
             }
@@ -99,39 +109,8 @@ namespace Rubberduck.UI.Refactorings.AddNewComponent
             }
             else
             {
-                var conflictingDeclarations = _declarationFinderProvider.DeclarationFinder
-                    .UserDeclarations(DeclarationType.Module)
-                    .Where(declaration => declaration.ProjectId == Model.ProjectId
-                            && declaration.IdentifierName.Equals(ComponentName)); 
-                
-                if (conflictingDeclarations.Any()
-                    && !UserConfirmsToProceedWithConflictingName(Model.ComponentName, conflictingDeclarations.FirstOrDefault()))
-                {
-                    base.DialogCancel();
-                }
-                else
-                {
-                    base.DialogOk();
-                }
+                base.DialogOk();
             }
-        }
-
-        private bool UserConfirmsToProceedWithConflictingName(string componentName, Declaration conflictingDeclaration)
-        {
-            var counter = 1;
-            var suffixedName = componentName + counter.ToString();
-            while (_declarationFinderProvider.DeclarationFinder
-                        .UserDeclarations(DeclarationType.Module)
-                        .Where(d => d.ProjectId == Model.ProjectId
-                                && d.IdentifierName.Equals(suffixedName))
-                        .Any())
-            {
-                counter++;
-                suffixedName = componentName + counter.ToString();
-            }
-
-            var message = string.Format(RefactoringsUI.AddNewComponent_ConflictingDeclarations, componentName, conflictingDeclaration.QualifiedName.ToString(), suffixedName);
-            return _messageBox?.ConfirmYesNo(message, RefactoringsUI.AddNewComponent_Caption) ?? false;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Rubberduck.UI.Refactorings.MoveToFolder
 
         private void ValidateFolder()
         {            
-            if (!CodeExplorerFolderPathValidator.IsFolderPathValid(NewFolder, true, out var errors))
+            if (!CodeExplorerFolderPathValidator.IsFolderPathValid(NewFolder, out var errors))
             {
                 SetErrors(nameof(NewFolder), errors);
             }

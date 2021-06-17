@@ -629,4 +629,8 @@ Do you want to proceed?</value>
 Do you want to proceed with this rename?</value>
     <comment>{0}: NewName; {1}: conflicting declaration; {2}: suffixed unique name</comment>
   </data>
+  <data name="InvalidNameCriteria_IsNotUniqueName" xml:space="preserve">
+    <value>Name '{0}' already exists in project '{1}'.</value>
+    <comment>0: component name; 1: ProjectId</comment>
+  </data>
 </root>

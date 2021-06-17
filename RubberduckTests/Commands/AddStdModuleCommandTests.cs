@@ -57,7 +57,7 @@ namespace RubberduckTests.Commands
                     DialogData dialogData,
                     AddComponentModel addComponentModel,
                     IRefactoringView<AddComponentModel> view,
-                    IRefactoringViewModel<AddComponentModel> IRefactoringViewModel)
+                    IRefactoringViewModel<AddComponentModel> viewModel)
                 =>
                 {
                     dialogMock.SetupGet(dialog => dialog.ViewModel.Model).Returns(() => expectedComponent);
