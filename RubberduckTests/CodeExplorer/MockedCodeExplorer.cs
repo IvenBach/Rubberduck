@@ -30,6 +30,7 @@ using Rubberduck.UnitTesting.CodeGeneration;
 using Rubberduck.UnitTesting.Settings;
 using Rubberduck.VBEditor.Events;
 using Rubberduck.UI.CodeExplorer;
+using Rubberduck.UI.Refactorings;
 using Rubberduck.VBEditor;
 using Rubberduck.VBEditor.ComManagement;
 using Rubberduck.VBEditor.SourceCodeHandling;
@@ -217,40 +218,8 @@ namespace RubberduckTests.CodeExplorer
         public WindowSettings WindowSettings { get; } = new WindowSettings();
 
         public MockedCodeExplorer ImplementAddStdModuleCommand()
-        {
-            var codePaneComponentSourceCodeHandler = new CodeModuleComponentSourceCodeHandler();
-            var nonCodeExplorerAddComponentService = new AddComponentService(State.ProjectsProvider, codePaneComponentSourceCodeHandler, codePaneComponentSourceCodeHandler);
-
-            var dialogMock = new Mock<IRefactoringDialog<AddComponentModel, IRefactoringView<AddComponentModel>, IRefactoringViewModel<AddComponentModel>>>();
-            dialogMock.Setup(m => m.ShowDialog())
-                .Returns(RefactoringDialogResult.Execute);
-            var dialogFactoryMock = new Mock<Rubberduck.UI.Refactorings.IRefactoringDialogFactory>();
-            dialogFactoryMock.Setup(mock => mock.CreateDialog
-                <
-                    AddComponentModel,
-                    IRefactoringView<AddComponentModel>,
-                    IRefactoringViewModel<AddComponentModel>,
-                    IRefactoringDialog<AddComponentModel, IRefactoringView<AddComponentModel>, IRefactoringViewModel<AddComponentModel>>
-                >(
-                    It.IsAny<Rubberduck.UI.Refactorings.DialogData>(),
-                    It.IsAny<AddComponentModel>(),
-                    It.IsAny<IRefactoringView<AddComponentModel>>(),
-                    It.IsAny<IRefactoringViewModel<AddComponentModel>>()
-                ))
-                .Returns(
-                    (
-                        Rubberduck.UI.Refactorings.DialogData dialogData,
-                        AddComponentModel addComponentModel,
-                        IRefactoringView<AddComponentModel> view,
-                        IRefactoringViewModel<AddComponentModel> viewModel
-                    ) =>
-                    {
-                        dialogMock.SetupGet(dialog => dialog.ViewModel.Model).Returns(() => addComponentModel);
-                        return dialogMock.Object;
-                    }
-                );
-            
-            ViewModel.AddStdModuleCommand = new AddStdModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider, nonCodeExplorerAddComponentService, dialogFactoryMock.Object);
+        {            
+            ViewModel.AddStdModuleCommand = new AddStdModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider, NonCodeExplorerAddComponentService(), RefactoringDialogFactory());
             return this;
         }
 
@@ -274,7 +243,7 @@ namespace RubberduckTests.CodeExplorer
 
         public MockedCodeExplorer ImplementAddClassModuleCommand()
         {
-            ViewModel.AddClassModuleCommand = new AddClassModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider);
+            ViewModel.AddClassModuleCommand = new AddClassModuleCommand(AddComponentService(), VbeEvents.Object, State.ProjectsProvider, NonCodeExplorerAddComponentService(), RefactoringDialogFactory());
             return this;
         }
 
@@ -549,6 +518,46 @@ namespace RubberduckTests.CodeExplorer
                 new ExtractInterfaceRefactoring(extractInterfaceBaseRefactoring, State, userInteraction, null, new Mock<IExtractInterfaceConflictFinderFactory>().Object, CreateCodeBuilder()),
                 State, null, VbeEvents.Object);
             return this;
+        }
+
+        private AddComponentService NonCodeExplorerAddComponentService()
+        {
+            var codePaneComponentSourceCodeHandler = new CodeModuleComponentSourceCodeHandler();
+            return new AddComponentService(State.ProjectsProvider, codePaneComponentSourceCodeHandler, codePaneComponentSourceCodeHandler);
+        }
+
+        private IRefactoringDialogFactory RefactoringDialogFactory()
+        {
+            var dialogMock = new Mock<IRefactoringDialog<AddComponentModel, IRefactoringView<AddComponentModel>, IRefactoringViewModel<AddComponentModel>>>();
+            dialogMock.Setup(m => m.ShowDialog())
+                .Returns(RefactoringDialogResult.Execute);
+            var dialogFactoryMock = new Mock<IRefactoringDialogFactory>();
+            dialogFactoryMock.Setup(mock => mock.CreateDialog
+                <
+                    AddComponentModel,
+                    IRefactoringView<AddComponentModel>,
+                    IRefactoringViewModel<AddComponentModel>,
+                    IRefactoringDialog<AddComponentModel, IRefactoringView<AddComponentModel>, IRefactoringViewModel<AddComponentModel>>
+                >(
+                    It.IsAny<DialogData>(),
+                    It.IsAny<AddComponentModel>(),
+                    It.IsAny<IRefactoringView<AddComponentModel>>(),
+                    It.IsAny<IRefactoringViewModel<AddComponentModel>>()
+                ))
+                .Returns(
+                    (
+                        DialogData dialogData,
+                        AddComponentModel addComponentModel,
+                        IRefactoringView<AddComponentModel> view,
+                        IRefactoringViewModel<AddComponentModel> viewModel
+                    ) =>
+                    {
+                        dialogMock.SetupGet(dialog => dialog.ViewModel.Model).Returns(() => addComponentModel);
+                        return dialogMock.Object;
+                    }
+                );
+
+            return dialogFactoryMock.Object;
         }
 
         private ICodeBuilder CreateCodeBuilder()
